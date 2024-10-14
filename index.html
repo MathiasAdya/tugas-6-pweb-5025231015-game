@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Box Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+        }
+        #box {
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="score">Score: 0</div>
+        <div id="timer">Time: 10s</div>
+        <div id="box"></div>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 10;
+        const box = document.getElementById('box');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        function randomPosition() {
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            box.style.left = `${x}px`;
+            box.style.top = `${y}px`;
+        }
+
+        box.addEventListener('click', function() {
+            score++;
+            scoreDisplay.innerText = `Score: ${score}`;
+            randomPosition();
+        });
+
+        const countdown = setInterval(function() {
+            timeLeft--;
+            timerDisplay.innerText = `Time: ${timeLeft}s`;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                box.style.display = 'none';
+                timerDisplay.innerText = 'Time\'s up!';
+                alert(`Game over! Your final score is ${score}.`);
+            }
+        }, 1000);
+
+        randomPosition();
+    </script>
+</body>
+</html>
